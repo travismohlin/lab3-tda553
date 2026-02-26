@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
-public class CarMechanic<T extends Car> {
-    private int maxCars;
+public class CarMechanic<T extends Car> implements ICarMechanic<T> {
+    private final int maxCars;
 
     private int x;
     private int y;
     private int width;
     private int height;
 
-    private ArrayList<T> cars = new ArrayList<>();
+    private final ArrayList<Car> cars = new ArrayList<Car>();
 
     public CarMechanic(int maxCars) {
         this.maxCars = maxCars;
@@ -26,7 +26,8 @@ public class CarMechanic<T extends Car> {
         return car.getX() >= x && car.getX() <= x + width && car.getY() >= y && car.getY() <= y + height;
     }
 
-    public void addCar(T car){
+    @Override
+    public void addCar(Car car){
         if (maxCars > cars.size()){
             cars.add(car);
         }
@@ -35,15 +36,16 @@ public class CarMechanic<T extends Car> {
         }
     }
 
-    public String returnCar(T car) {
+    @Override
+    public void returnCar(Car car) {
         if (cars.contains(car)) {
             cars.remove(car);
-            return "You got the car" + car.getModelName();
+            return;
         }
         throw new IllegalStateException("Car not in this mechanic shop");
     }
 
- }
+}
 
 
  

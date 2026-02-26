@@ -20,25 +20,31 @@ public class CarController {
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
-    // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
-    CarMechanic<Volvo240> volvo240CarMechanic = new CarMechanic<Volvo240>(300, 300, 120, 120, 10);
+
+    private final GameModel model;
+    private ICarMechanic<Volvo240> volvo240CarMechanic;
+
+    public CarController(GameModel model) {
+        this.model = model;
+        volvo240CarMechanic = new CarMechanic<Volvo240>(300, 300, 120, 120, 10);
+    }
 
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
-        CarController cc = new CarController();
+        GameModel model = new GameModel();
+        CarController cc = new CarController(model);
 
-        cc.cars.add(new Volvo240());
+        model.addCar(new Volvo240());
 
         Saab95 sabb = new Saab95();
         sabb.setY(100);
-        cc.cars.add(sabb);
+        model.addCar(sabb);
 
         Scania scania = new Scania();
         scania.setY(200);
-        cc.cars.add(scania);
+        model.addCar(scania);
 
 
         // Start a new view and send a reference of self
@@ -49,13 +55,47 @@ public class CarController {
     }
 
     public ArrayList<Car> getCars() {
-        return cars;
+        return model.getCars();
     }
 
     public void stopEngine() {
-        for (Car car : cars) {
-            car.stopEngine();
-        }
+        model.stopEngine();
+    }
+
+    public void startEngine() {
+        model.startEngine();
+    }
+
+    public void gas(int amount) {
+        model.gas(amount);
+    }
+
+    public void brake(int amount) {
+        model.brake(amount);
+    }
+
+    public void turboOn() {
+        model.setTurboOn();
+    }
+
+    public void turboOff() {
+        model.setTurboOff();
+    }
+
+    public void liftBed() {
+        model.liftBed();
+    }
+
+    public void lowerBed() {
+        model.lowerBed();
+    }
+
+    public void turnLeft() {
+        model.turnLeft();
+    }
+
+    public void turnRight() {
+        model.turnRight();
     }
 
     private void turnAndRestartCar(Car car) {
@@ -71,8 +111,9 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
-                car.move();
+            model.update();
+            for (int i = 0; i < model.getCars().size(); i++) {
+                Car car = model.getCars().get(i);
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
 
@@ -88,78 +129,14 @@ public class CarController {
                 car.setX(Math.max(0, Math.min(x, maxX)));
                 car.setY(Math.max(0, Math.min(y, maxY)));
 
-                if (car instanceof Volvo240 && volvo240CarMechanic.isInside(car)) {
-                    volvo240CarMechanic.addCar((Volvo240) car);
-                    cars.remove(car);
-                    break;
+                if (car instanceof Volvo240 volvo && volvo240CarMechanic.isInside(volvo)) {
+                    volvo240CarMechanic.addCar(volvo);
+                    model.getCars().remove(car);
+                    i--;
                 }
             }
             frame.drawPanel.repaint();
         }
 
     }
-
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.gas(gas);
-        }
-    }
-    void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.brake(brake);
-        }
-    }
-    void turboOn()  {
-        for (Car car: cars) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOn();
-            }
-        }
-    }
-    void turboOff()  {
-        for (Car car: cars) {
-            if (car instanceof Saab95) {
-                ((Saab95) car).setTurboOff();
-            }
-        }
-    }
-    void liftBed()  {
-        for (Car car: cars) {
-            if (car instanceof RampTruck) {
-                ((RampTruck) car).setFlatbedAngle(70);
-            }
-        }
-    }
-    void lowerBed()  {
-        for (Car car: cars) {
-            if (car instanceof RampTruck) {
-                ((RampTruck) car).setFlatbedAngle(0);
-            }
-        }
-    }
-    void startEngine()  {
-        for (Car car: cars) {
-            if (car != null) {
-                ((Car) car).startEngine();
-            }
-        }
-    }
-    void turnLeft()  {
-        for (Car car: cars) {
-            if (car != null) {
-                ((Car) car).turnLeft();
-            }
-        }
-    }
-    void turnRight()  {
-        for (Car car: cars) {
-            if (car != null) {
-                ((Car) car).turnRight();
-            }
-        }
-    }
-
 }
