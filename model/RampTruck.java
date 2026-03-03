@@ -1,8 +1,10 @@
+package model;
+
 /**
  * A truck with a flatbed that can be raised and lowered. The truck cannot move while the flatbed is not fully raised.
  * The truck can have its turbo on or off, which affects the speed factor. Turbo factor is 2.5.
  */
-public abstract class RampTruck extends Car {
+public abstract class RampTruck extends Car implements FlatBedCapable {
     private double flatbedAngle;
     private boolean turboOn;
 

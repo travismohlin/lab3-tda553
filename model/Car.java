@@ -1,6 +1,6 @@
+package model;
+
 import java.awt.*;
-import java.util.Objects;
-import java.math.*;
 
 public abstract class Car implements Movable {
     private int nrDoors; // Number of doors on the car

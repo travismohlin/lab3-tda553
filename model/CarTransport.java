@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class CarTransport extends RampTruck {
@@ -5,7 +7,7 @@ public class CarTransport extends RampTruck {
     private ArrayList<Car> loadedCars = new ArrayList<>();
     
     public CarTransport() {
-        setModelName("Car Transport 💯");
+        setModelName("model.Car Transport 💯");
     }
     
     public int getCurrentLoad() {
@@ -28,14 +30,14 @@ public class CarTransport extends RampTruck {
     }
     
     /**
-     * @param car Car to be checked
+     * @param car model.Car to be checked
      * @return true if the car can be loaded, false otherwiser
      * @throws IllegalStateException if the car cannot be loaded due to any of the following reasons:
      * - Ramp is not down
-     * - Car is a car transport
-     * - Car is larger than 5m
+     * - model.Car is a car transport
+     * - model.Car is larger than 5m
      * - Max load has been reached
-     * - Car is not within 1 unit of distance from the truck
+     * - model.Car is not within 1 unit of distance from the truck
      */
     private boolean checkCarValidForLoading(Car car) {
         // We can check for 70 exactly since the ramp can only be fully lowered or raised.

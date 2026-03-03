@@ -1,3 +1,5 @@
+package model;
+
 public interface ICarMechanic<T extends Car> {
     void addCar(T car);
 

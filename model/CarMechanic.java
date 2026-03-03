@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class CarMechanic<T extends Car> implements ICarMechanic<T> {
@@ -42,7 +44,7 @@ public class CarMechanic<T extends Car> implements ICarMechanic<T> {
             cars.remove(car);
             return;
         }
-        throw new IllegalStateException("Car not in this mechanic shop");
+        throw new IllegalStateException("model.Car not in this mechanic shop");
     }
 
 }

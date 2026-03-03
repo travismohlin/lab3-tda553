@@ -1,5 +1,7 @@
-import javax.swing.event.TableModelListener;
+package model;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameModel {
     private final ArrayList<Car> cars = new ArrayList<>();
@@ -95,4 +97,13 @@ public class GameModel {
             car.stopEngine();
         }
     }
+
+    public void turnAndRestartCar(Car car) {
+        car.stopEngine();
+        car.turnRight();
+        car.turnRight();
+        car.startEngine();
+        car.move();
+    }
+
 }
