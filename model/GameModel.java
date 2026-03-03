@@ -6,7 +6,6 @@ import java.util.Iterator;
 public class GameModel {
     private final ArrayList<Car> cars = new ArrayList<>();
     private CarMechanic<Volvo240> volvoWorkshop = new CarMechanic<>(300, 300, 120, 120, 10, Volvo240.class);
-    ;
 
     private int maxX;
     private int maxY;
