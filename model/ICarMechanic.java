@@ -1,9 +1,6 @@
 package model;
 
 public interface ICarMechanic<T extends Car> {
-    void addCar(T car);
-
+    void addCar(Car car);
     void returnCar(T car);
-
-    boolean isInside(T car);
 }

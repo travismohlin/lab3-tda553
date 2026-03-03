@@ -10,36 +10,45 @@ public class CarMechanic<T extends Car> implements ICarMechanic<T> {
     private int width;
     private int height;
 
-    private final ArrayList<Car> cars = new ArrayList<Car>();
+    private final Class<T> acceptedType;
+
+    private final ArrayList<T> cars = new ArrayList<>();
 
     public CarMechanic(int maxCars) {
         this.maxCars = maxCars;
+        this.acceptedType = null;
     }
 
-    public CarMechanic(int x, int y, int width, int height, int maxCars) {
+    public CarMechanic(int x, int y, int width, int height, int maxCars, Class<T> acceptedType) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.maxCars = maxCars;
+        this.acceptedType = acceptedType;
     }
 
-    public boolean isInside(Car car) {
-        return car.getX() >= x && car.getX() <= x + width && car.getY() >= y && car.getY() <= y + height;
+    public boolean isInside(Positionable positionable) {
+        return positionable.getX() >= x && positionable.getX() <= x + width && positionable.getY() >= y && positionable.getY() <= y + height;
     }
 
-    @Override
-    public void addCar(Car car){
-        if (maxCars > cars.size()){
-            cars.add(car);
-        }
-        else {
-            throw new IllegalStateException("Max amount of cars reached.");
-        }
+    public boolean canAccept(Car car) {
+        return acceptedType.isInstance(car) &&
+                cars.size() < maxCars;
     }
 
     @Override
-    public void returnCar(Car car) {
+    public void addCar(Car car) {
+        if (!canAccept(car)) {
+            throw new IllegalArgumentException("Car not accepted");
+        }
+        cars.add(acceptedType.cast(car));
+    }
+
+
+
+    @Override
+    public void returnCar(T car) {
         if (cars.contains(car)) {
             cars.remove(car);
             return;

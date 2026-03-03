@@ -28,11 +28,9 @@ public class CarController {
     CarView frame;
 
     private final GameModel model;
-    private ICarMechanic<Volvo240> volvo240CarMechanic;
 
     public CarController(GameModel model) {
         this.model = model;
-        volvo240CarMechanic = new CarMechanic<Volvo240>(300, 300, 120, 120, 10);
     }
 
     //methods:
@@ -109,31 +107,8 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            model.update();
-            for (int i = 0; i < model.getCars().size(); i++) {
-                Car car = model.getCars().get(i);
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
-
-                int maxX = frame.drawPanel.getWidth() - 60; // ugly solution to remove control panel height
-                int maxY = frame.drawPanel.getHeight() - 60;
-
-                if (x < 0 || x > maxX) {
-                    turnAndRestartCar(car);
-                }
-                if (y < 0 || y > maxY) {
-                    turnAndRestartCar(car);
-                }
-                car.setX(Math.max(0, Math.min(x, maxX)));
-                car.setY(Math.max(0, Math.min(y, maxY)));
-
-                if (car instanceof Volvo240 volvo && volvo240CarMechanic.isInside(volvo)) {
-                    volvo240CarMechanic.addCar(volvo);
-                    model.getCars().remove(car);
-                    i--;
-                }
-            }
-            frame.drawPanel.repaint();
+            model.update(frame.getWidth(), frame.getHeight());
+            frame.repaint();
         }
 
     }

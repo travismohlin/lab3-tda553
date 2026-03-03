@@ -5,6 +5,11 @@ import java.util.Iterator;
 
 public class GameModel {
     private final ArrayList<Car> cars = new ArrayList<>();
+    private CarMechanic<Volvo240> volvoWorkshop = new CarMechanic<>(300, 300, 120, 120, 10, Volvo240.class);
+    ;
+
+    private int maxX;
+    private int maxY;
 
     public ArrayList<Car> getCars() {
         return cars;
@@ -14,10 +19,52 @@ public class GameModel {
         cars.add(car);
     }
 
-    public void update() {
-        for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
+    public void update(int width, int height) {
+        this.maxX = width - 60;
+        this.maxY = height - 60;
+
+        moveCars();
+        handleWallCollisions();
+        handleWorkshops();
+    }
+
+    private void moveCars() {
+        for (Car car : cars) {
             car.move();
+        }
+    }
+
+    private void handleWallCollisions() {
+        for (Car car : cars) {
+
+            int x = (int) Math.round(car.getX());
+            int y = (int) Math.round(car.getY());
+
+            if (x < 0 || x > maxX) {
+                turnAndRestartCar(car);
+            }
+
+            if (y < 0 || y > maxY) {
+                turnAndRestartCar(car);
+            }
+
+            car.setX(Math.max(0, Math.min(x, maxX)));
+            car.setY(Math.max(0, Math.min(y, maxY)));
+        }
+    }
+
+    private void handleWorkshops() {
+        Iterator<Car> iterator = cars.iterator();
+
+        while (iterator.hasNext()) {
+            Car car = iterator.next();
+
+            if (volvoWorkshop.canAccept(car) &&
+                    volvoWorkshop.isInside(car)) {
+
+                volvoWorkshop.addCar(car);
+                iterator.remove();
+            }
         }
     }
 
@@ -38,32 +85,28 @@ public class GameModel {
 
     public void setTurboOn() {
         for (Car c : cars) {
-            if (c instanceof TurboCapable t) {
-                t.setTurboOn();
-            }
+            c.setTurboOn();
         }
     }
 
     public void setTurboOff() {
         for (Car c : cars) {
-            if (c instanceof TurboCapable t) {
-                t.setTurboOff();
-            }
+            c.setTurboOff();
         }
     }
 
     public void liftBed()  {
         for (Car car: cars) {
-            if (car instanceof RampTruck) {
-                ((RampTruck) car).setFlatbedAngle(70);
+            if (car instanceof FlatBedCapable flatbed) {
+                flatbed.setFlatbedAngle(70);
             }
         }
     }
 
     public void lowerBed()  {
         for (Car car: cars) {
-            if (car instanceof RampTruck) {
-                ((RampTruck) car).setFlatbedAngle(0);
+            if (car instanceof FlatBedCapable flatbed) {
+                flatbed.setFlatbedAngle(0);
             }
         }
     }
@@ -71,7 +114,7 @@ public class GameModel {
     public void startEngine()  {
         for (Car car: cars) {
             if (car != null) {
-                ((Car) car).startEngine();
+                car.startEngine();
             }
         }
     }
@@ -79,7 +122,7 @@ public class GameModel {
     public void turnLeft()  {
         for (Car car: cars) {
             if (car != null) {
-                ((Car) car).turnLeft();
+                car.turnLeft();
             }
         }
     }
@@ -87,7 +130,7 @@ public class GameModel {
     public void turnRight()  {
         for (Car car: cars) {
             if (car != null) {
-                ((Car) car).turnRight();
+               car.turnRight();
             }
         }
     }

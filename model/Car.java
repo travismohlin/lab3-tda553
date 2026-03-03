@@ -2,7 +2,7 @@ package model;
 
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Car implements Movable, Positionable {
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
@@ -15,6 +15,10 @@ public abstract class Car implements Movable {
     }
 
     public void setNrDoors(int nrDoors) {this.nrDoors = nrDoors;};
+
+    public void setTurboOn() {}
+
+    public void setTurboOff() {}
 
     public double getEnginePower(){ return enginePower; }
 
@@ -59,10 +63,12 @@ public abstract class Car implements Movable {
     private double x = 0;
     private double y = 0;
 
+    @Override
     public double getX() {
         return x;
     }
 
+    @Override
     public double getY() {
         return y;
     }
@@ -71,11 +77,11 @@ public abstract class Car implements Movable {
         return new double[]{x, y};
     }
 
-    protected void setX(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    protected void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 
