@@ -11,5 +11,6 @@ public class Scania extends RampTruck {
         setModelName("Scania");
         setLength(6);
         stopEngine();
+        CarFactory.register(Scania.class);
     }
 }

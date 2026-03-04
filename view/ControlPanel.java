@@ -1,5 +1,8 @@
 package view;
 
+import model.Car;
+import model.CarFactory;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -25,6 +28,10 @@ public class ControlPanel extends JPanel {
     public ControlPanel(int frameWidth) {
         setLayout(new BorderLayout());
 
+        for (Class<? extends Car> carClass : CarFactory.getCarTypes()) {
+            selectAddCar.addItem(carClass.getSimpleName());
+        }
+
         SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
@@ -48,6 +55,8 @@ public class ControlPanel extends JPanel {
         buttonsPanel.add(lowerBedButton, 5);
         buttonsPanel.add(turnLeftButton, 6);
         buttonsPanel.add(turnRightButton, 7);
+        buttonsPanel.add(selectAddCar, 8);
+        buttonsPanel.add(addRandomCar, 9);
 
         add(gasPanel, BorderLayout.PAGE_START);
         add(buttonsPanel, BorderLayout.CENTER);

@@ -19,12 +19,13 @@ public class GameModel {
     }
 
     public void update(int width, int height) {
-        this.maxX = width - 60;
-        this.maxY = height - 60;
+        this.maxX = width - 100;
+        this.maxY = height - 300;
 
         moveCars();
         handleWallCollisions();
         handleWorkshops();
+        notifyObservers();
     }
 
     private void moveCars() {

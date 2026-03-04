@@ -15,6 +15,7 @@ public class Volvo240 extends Car {
         setModelName("model.Movable.Volvo240");
         setLength(3);
         stopEngine();
+        CarFactory.register(Volvo240.class);
     }
 
     public double speedFactor(){ return getEnginePower() * 0.01 * getTrimFactor();}

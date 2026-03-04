@@ -53,6 +53,7 @@ public class CarController {
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
+        model.addObserver(cc.frame);
 
         // Start the timer
         cc.timer.start();
@@ -108,7 +109,6 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             model.update(frame.getWidth(), frame.getHeight());
-            frame.repaint();
         }
 
     }
