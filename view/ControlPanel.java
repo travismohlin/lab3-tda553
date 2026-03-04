@@ -24,6 +24,8 @@ public class ControlPanel extends JPanel {
     private final JButton lowerBedButton = new JButton("Lower Lift Bed");
     private final JButton turnRightButton = new JButton("Turn right");
     private final JButton turnLeftButton = new JButton("Turn left");
+    private final JComboBox<String> selectAddCar = new JComboBox();
+    private final JButton addRandomCar = new JButton("Add random car");
 
     public ControlPanel(int frameWidth) {
         setLayout(new BorderLayout());

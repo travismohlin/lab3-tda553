@@ -1,6 +1,7 @@
 package view;
 
 import controller.CarController;
+import model.ModelObserver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements ModelObserver {
     private static final int X = 800;
     private static final int Y = 800;
 

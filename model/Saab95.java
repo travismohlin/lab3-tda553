@@ -16,6 +16,7 @@ public class Saab95 extends Car {
         setModelName("model.Positionable.Saab95");
         setLength(3);
         stopEngine();
+        CarFactory.register(Saab95.class);
     }
 
     public void setTurboOn(){

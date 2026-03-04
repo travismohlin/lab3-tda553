@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 public class GameModel {
     private final ArrayList<Car> cars = new ArrayList<>();
+    private final ArrayList<ModelObserver> observers = new ArrayList<>();
     private CarMechanic<Volvo240> volvoWorkshop = new CarMechanic<>(300, 300, 120, 120, 10, Volvo240.class);
 
     private int maxX;
@@ -13,6 +14,19 @@ public class GameModel {
     public ArrayList<Car> getCars() {
         return cars;
     }
+
+    public void addObserver(ModelObserver observer) {
+        observers.add(observer);
+    }
+
+
+    private void notifyObservers() {
+        for (ModelObserver observer : observers) {
+            observer.modelUpdated();
+        }
+    }
+
+
 
     public void addCar(Car car) {
         cars.add(car);
