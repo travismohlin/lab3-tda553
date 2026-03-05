@@ -26,6 +26,8 @@ public class ControlPanel extends JPanel {
     private final JButton turnLeftButton = new JButton("Turn left");
     private final JComboBox<String> selectAddCar = new JComboBox();
     private final JButton addRandomCar = new JButton("Add random car");
+    private final JButton addSelectedCar = new JButton("Add selected car");
+    private final JButton removeLastCar = new JButton("Remove Car");
 
     public ControlPanel(int frameWidth) {
         setLayout(new BorderLayout());
@@ -59,6 +61,8 @@ public class ControlPanel extends JPanel {
         buttonsPanel.add(turnRightButton, 7);
         buttonsPanel.add(selectAddCar, 8);
         buttonsPanel.add(addRandomCar, 9);
+        buttonsPanel.add(addSelectedCar, 10);
+        buttonsPanel.add(removeLastCar, 11);
 
         add(gasPanel, BorderLayout.PAGE_START);
         add(buttonsPanel, BorderLayout.CENTER);
@@ -103,5 +107,20 @@ public class ControlPanel extends JPanel {
 
     public JButton getTurnLeftButton() {
         return turnLeftButton;
+    }
+
+    public JComboBox<String> getSelectAddCar() {
+        return selectAddCar;
+    }
+
+    public JButton getAddRandomCarButton() {
+        return addRandomCar;
+    }
+
+    public JButton getAddSelectedCar() {
+        return addSelectedCar;
+    }
+    public JButton getRemoveLastCar() {
+        return removeLastCar;
     }
 }

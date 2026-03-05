@@ -50,7 +50,6 @@ public class CarController {
         scania.setY(200);
         model.addCar(scania);
 
-
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
         model.addObserver(cc.frame);
@@ -102,6 +101,12 @@ public class CarController {
     public void turnRight() {
         model.turnRight();
     }
+
+    public void addSelectedCar(String selectedCar) { model.addSelectedCar(selectedCar); }
+
+    public void addRandomCar() { model.addRandomCar(); }
+
+    public void removeLastCar() { model.removeLastCar(); }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.

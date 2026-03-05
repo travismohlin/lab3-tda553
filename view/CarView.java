@@ -120,6 +120,29 @@ public class CarView extends JFrame implements ModelObserver {
             }
         });
 
+        controlPanel.getAddSelectedCar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.addSelectedCar(controlPanel.getSelectAddCar().getSelectedItem().toString());
+            }
+        });
+
+
+        controlPanel.getAddRandomCarButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.addRandomCar();
+            }
+
+        });
+
+        controlPanel.getRemoveLastCar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.removeLastCar();
+            }
+        });
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 

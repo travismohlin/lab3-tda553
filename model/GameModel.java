@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class GameModel {
     private final ArrayList<Car> cars = new ArrayList<>();
@@ -19,14 +20,11 @@ public class GameModel {
         observers.add(observer);
     }
 
-
     private void notifyObservers() {
         for (ModelObserver observer : observers) {
             observer.modelUpdated();
         }
     }
-
-
 
     public void addCar(Car car) {
         cars.add(car);
@@ -161,6 +159,36 @@ public class GameModel {
         car.turnRight();
         car.startEngine();
         car.move();
+    }
+
+    public boolean canNotAddCar() {
+        return !(cars.size() <= 5);
+    }
+
+
+    public void addSelectedCar(String selectedCar) {
+        if (canNotAddCar()) return;
+        for (Class<? extends Car> carClass : CarFactory.getCarTypes()) {
+            if (carClass.getSimpleName().equals(selectedCar)) {
+                Car car = CarFactory.create(carClass);
+                addCar(car);
+                break;
+            }
+        }
+    }
+
+    public void addRandomCar() {
+        if (canNotAddCar()) return;
+        Random random = new Random();
+        Class<? extends Car> randomCar = CarFactory.getCarTypes().get(random.nextInt(CarFactory.getCarTypes().size()));
+        addCar(CarFactory.create(randomCar));
+    }
+
+    public void removeLastCar() {
+        if (cars.isEmpty()) {
+            return;
+        }
+        cars.removeLast();
     }
 
 }
